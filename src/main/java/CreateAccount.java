@@ -1,3 +1,6 @@
+import Utils.UserActionException;
+import Utils.UserException;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +17,7 @@ public class CreateAccount extends JFrame {
     private JPasswordField jpfUserConfirmPassword;
     private JButton jbCreateUser;
     private JButton jbExitButton;
+    private String userName, userPassword, userConfirmPassword;
     
     public CreateAccount() {
         this.setTitle("Bem-vindo! Crie sua conta");
@@ -30,22 +34,34 @@ public class CreateAccount extends JFrame {
         jbCreateUser.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                String userName = tfUserName.getText();
-                String userPassword = String.valueOf(jpfUserPassword.getPassword());
-                String userConfirmPassword = String.valueOf(jpfUserConfirmPassword.getPassword());
+                userName = tfUserName.getText();
+                userPassword = String.valueOf(jpfUserPassword.getPassword());
+                userConfirmPassword = String.valueOf(jpfUserConfirmPassword.getPassword());
                 
-                if (userName.isEmpty() || userPassword.isEmpty() || userConfirmPassword.isEmpty()) {
-                    JOptionPane.showMessageDialog(createAccountPanel, "Preencha todos os campos!");
-                }
-                else if (!userPassword.equals(userConfirmPassword)) {
-                    JOptionPane.showMessageDialog(createAccountPanel, "As senhas não conferem!");
-                } else {
-                    JOptionPane.showMessageDialog(createAccountPanel,
-                            "Parabéns " + userName +"! Sua conta foi criada" + "com sucesso!"
-                    );
+                try {
+                    validateCreateAccount();
+                } catch(Exception e){
+                    JOptionPane.showMessageDialog(createAccountPanel,"Não foi possível criar a conta!");
+                } finally {
+                    clearFormFields();
                 }
             }
         });
+    }
+    
+    public void validateCreateAccount() throws UserActionException, UserException {
+        if(userName.isEmpty() || userPassword.isEmpty() || userConfirmPassword.isEmpty()) {
+            JOptionPane.showMessageDialog(createAccountPanel, "Preencha todos os campos!");
+        } else if(!userPassword.equals(userConfirmPassword)) {
+            JOptionPane.showMessageDialog(createAccountPanel, "As senhas não conferem!");
+        } else {
+            User newUser = new User(userName, userPassword);
+            UserAction createUser = new UserAction();
+            
+            createUser.createUser(newUser);
+            
+            JOptionPane.showMessageDialog(createAccountPanel, "Parabéns " + userName +"! Sua conta foi criada" + "com sucesso!");
+        }
     }
     
     public void validateUserNameField() {
@@ -63,6 +79,12 @@ public class CreateAccount extends JFrame {
                 }
             }
         });
+    }
+    
+    public void clearFormFields() {
+        tfUserName.setText(null);
+        jpfUserPassword.setText(null);
+        jpfUserConfirmPassword.setText(null);
     }
     
     public void quitApplication() {
