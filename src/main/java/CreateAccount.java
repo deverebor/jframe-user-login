@@ -2,10 +2,8 @@ import Utils.UserActionException;
 import Utils.UserException;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
+import java.awt.*;
+import java.awt.event.*;
 
 public class CreateAccount extends JFrame {
     private JPanel createAccountPanel;
@@ -17,6 +15,7 @@ public class CreateAccount extends JFrame {
     private JPasswordField jpfUserConfirmPassword;
     private JButton jbCreateUser;
     private JButton jbExitButton;
+    private JButton jbShowUserCredencial;
     private String userName, userPassword, userConfirmPassword;
     
     public CreateAccount() {
@@ -25,7 +24,9 @@ public class CreateAccount extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
         this.setVisible(true);
+        
         createAccount();
+        showUserCredentials();
         validateUserNameField();
         quitApplication();
     }
@@ -45,6 +46,16 @@ public class CreateAccount extends JFrame {
                 } finally {
                     clearFormFields();
                 }
+            }
+        });
+    }
+    
+    public void showUserCredentials() {
+        jbShowUserCredencial.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                closeWindow();
+                ShowUserCredencial showUserCredencial = new ShowUserCredencial();
             }
         });
     }
@@ -85,6 +96,12 @@ public class CreateAccount extends JFrame {
         tfUserName.setText(null);
         jpfUserPassword.setText(null);
         jpfUserConfirmPassword.setText(null);
+    }
+    
+    public void closeWindow() {
+        WindowEvent windowClosingEvent = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
+        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(windowClosingEvent);
+        dispose();
     }
     
     public void quitApplication() {
