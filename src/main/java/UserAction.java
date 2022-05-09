@@ -19,6 +19,8 @@ public class UserAction {
             } catch (Exception error) {
                 throw new UserActionException("Error creating user account!");
             }
+        } else {
+            throw new UserActionException("Maximum number of users reached!");
         }
     }
 }
