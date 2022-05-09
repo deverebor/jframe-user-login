@@ -14,11 +14,13 @@ public class UserAction {
             try {
                 users[pointer] = user;
                 pointer++;
-    
+                
                 System.out.println("User account created successfully!");
             } catch (Exception error) {
                 throw new UserActionException("Error creating user account!");
             }
+        } else {
+            throw new UserActionException("Maximum number of users reached!");
         }
     }
 }

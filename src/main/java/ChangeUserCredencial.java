@@ -22,7 +22,8 @@ public class ChangeUserCredencial extends JFrame {
     private String oldUserName, oldUserPassword, newUserName, newUserPassword;
     
     public ChangeUserCredencial() {
-        JFrame changeUserCredencialFrame = new JFrame("Change User Credencial");
+        JFrame changeUserCredencialFrame = new JFrame();
+        changeUserCredencialFrame.setTitle("Change User Credencial");
         changeUserCredencialFrame.setContentPane(changeUserCredencialPanel);
         changeUserCredencialFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         changeUserCredencialFrame.pack();
