@@ -16,6 +16,7 @@ public class CreateAccount extends JFrame {
     private JButton jbCreateUser;
     private JButton jbExitButton;
     private JButton jbShowUserCredencial;
+    private JButton jbChangeUserCredential;
     private String userName, userPassword, userConfirmPassword;
     
     public CreateAccount() {
@@ -27,6 +28,7 @@ public class CreateAccount extends JFrame {
         
         createAccount();
         showUserCredentials();
+        changeUserCredentials();
         validateUserNameField();
         quitApplication();
     }
@@ -56,6 +58,16 @@ public class CreateAccount extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
                 closeWindow();
                 ShowUserCredencial showUserCredencial = new ShowUserCredencial();
+            }
+        });
+    }
+    
+    public void changeUserCredentials() {
+        jbChangeUserCredential.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                closeWindow();
+                ChangeUserCredencial changeUserCredential = new ChangeUserCredencial();
             }
         });
     }
