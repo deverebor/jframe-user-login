@@ -9,6 +9,8 @@ public class User {
     public User(String userName, String userPassword) throws UserException {
         if(userPassword == null || userName == null){
             throw new UserException("User name or password cannot be null");
+        } else if(userPassword.length() == 0 || userName.length() == 0){
+            throw new UserException("User name or password cannot be empty");
         } else {
             this.setUserName(userName);
             this.setUserPassword(userPassword);
