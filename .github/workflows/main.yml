@@ -1,7 +1,7 @@
-name: tests
-on: push
+name: Test Aplication
+on: [push, pull_request]
 jobs:
-  first_job:
+  tests:
     runs-on: ubuntu-latest
     steps:
       - name: Download repository
