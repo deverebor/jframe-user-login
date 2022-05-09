@@ -2,7 +2,7 @@ name: Test Aplication
 on: [push, pull_request]
 jobs:
 
-  test: Test application with ${{ runner.os }} in ${{ matrix.java }}
+  test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -26,7 +26,7 @@ jobs:
       - name: Test project with Maven
         run: mvn -B test --file pom.xml
 
-  build: Build application with ${{ runner.os }} in ${{ matrix.java }}
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Download repository
@@ -40,7 +40,7 @@ jobs:
       - name: Build project with Maven
         run: mvn -B package --file pom.xml
 
-  publish-job: Publish application
+  publish-job:
     runs-on: ubuntu-latest
     needs: [ test_and_build ]
     steps:
