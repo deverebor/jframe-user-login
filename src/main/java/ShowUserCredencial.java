@@ -10,63 +10,71 @@ public class ShowUserCredencial extends JFrame {
     private JPanel showUserCredencialPanel;
     private JScrollPane jspShowUserContent;
     private JButton jbReturnToLogin;
+    private JTextField jtfUserName;
+    private JLabel jlUserName;
+    private JButton jbSearchUser;
     
     public ShowUserCredencial() {
-        JFrame showUserCredencialFrame = new JFrame("Listagem de todos os usuários");
+        JFrame showUserCredencialFrame = new JFrame("Pesquisar um usuário");
         showUserCredencialFrame.setContentPane(showUserCredencialPanel);
         showUserCredencialFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         showUserCredencialFrame.pack();
         showUserCredencialFrame.setVisible(true);
     
-        showCredentials();
         returnToLogin();
+        showCredentials();
     }
     
     public void showCredentials() {
-        User user = new User();
-        try {
-            jtShowUserContent.setModel(new AbstractTableModel() {
-                final String[] columnNames = {"Nome do usuário"};
-                final Object[][] data = {{user}};
-        
-                @Override
-                public int getColumnCount() {
-                    return columnNames.length;
-            
+        jbSearchUser.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                try {
+                    User user = new User();
+                    jtShowUserContent.setModel(new AbstractTableModel() {
+                        final String[] columnNames = {"Nome do usuário"};
+                        final Object[][] data = {{user.getUserName()}};
+                    
+                        @Override
+                        public int getColumnCount() {
+                            return columnNames.length;
+                        
+                        }
+                    
+                        @Override
+                        public int getRowCount() {
+                            return data.length;
+                        }
+                    
+                        @Override
+                        public String getColumnName(int col) {
+                            return columnNames[col];
+                        
+                        }
+                    
+                        @Override
+                        public Object getValueAt(int row, int col) {
+                            return data[row][col];
+                        }
+                    
+                        @Override
+                        public boolean isCellEditable(int row, int col) {
+                            return false;
+                        }
+                    
+                        @Override
+                        public void setValueAt(Object value, int row, int col) {
+                            data[row][col] = value;
+                            fireTableCellUpdated(row, col);
+                        }
+                    
+                    });
+                    JOptionPane.showMessageDialog(showUserCredencialPanel, "Os usuários foram encontrados na base de dados!");
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(showUserCredencialPanel, "Não foi possível encontrar os usuários na base de dados!");
                 }
-        
-                @Override
-                public int getRowCount() {
-                    return data.length;
-                }
-        
-                @Override
-                public String getColumnName(int col) {
-                    return columnNames[col];
-            
-                }
-        
-                @Override
-                public Object getValueAt(int row, int col) {
-                    return data[row][col];
-                }
-        
-                @Override
-                public boolean isCellEditable(int row, int col) {
-                    return false;
-                }
-        
-                @Override
-                public void setValueAt(Object value, int row, int col) {
-                    data[row][col] = value;
-                    fireTableCellUpdated(row, col);
-                }
-        
-            });
-            JOptionPane.showMessageDialog(showUserCredencialPanel, "Os usuários foram encontrados na base de dados!");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(showUserCredencialPanel, "Não foi possível encontrar os usuários na base de dados!");
-        }
+            }
+        });
     }
     
     public void returnToLogin() {
@@ -81,7 +89,5 @@ public class ShowUserCredencial extends JFrame {
     public void closeWindow() {
         WindowEvent windowClosingEvent = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
         Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(windowClosingEvent);
-        dispose();
-        CreateAccount mainFrame = new CreateAccount();
     }
 }

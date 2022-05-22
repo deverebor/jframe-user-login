@@ -17,14 +17,15 @@ public class CreateAccount extends JFrame {
     private JButton jbExitButton;
     private JButton jbShowUserCredencial;
     private JButton jbChangeUserCredential;
+    private JButton jbRemoveUser;
     private String userName, userPassword, userConfirmPassword;
     
     public CreateAccount() {
-        this.setTitle("Bem-vindo! Crie sua conta");
-        this.setContentPane(createAccountPanel);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.pack();
-        this.setVisible(true);
+        JFrame createAccountFrame = new JFrame("Bem-vindo! Crie sua conta");
+        createAccountFrame.setContentPane(createAccountPanel);
+        createAccountFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        createAccountFrame.pack();
+        createAccountFrame.setVisible(true);
         
         createAccount();
         showUserCredentials();
@@ -56,8 +57,8 @@ public class CreateAccount extends JFrame {
         jbShowUserCredencial.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                closeWindow();
                 ShowUserCredencial showUserCredencial = new ShowUserCredencial();
+                closeWindow();
             }
         });
     }
@@ -66,8 +67,18 @@ public class CreateAccount extends JFrame {
         jbChangeUserCredential.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                closeWindow();
                 ChangeUserCredencial changeUserCredential = new ChangeUserCredencial();
+                closeWindow();
+            }
+        });
+    }
+    
+    public void removeUserCredentials() {
+        jbRemoveUser.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                RemoveUserCredential removeUserCredential = new RemoveUserCredential();
+                closeWindow();
             }
         });
     }
