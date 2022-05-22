@@ -22,8 +22,7 @@ public class ChangeUserCredencial extends JFrame {
     private String oldUserName, oldUserPassword, newUserName, newUserPassword;
     
     public ChangeUserCredencial() {
-        JFrame changeUserCredencialFrame = new JFrame();
-        changeUserCredencialFrame.setTitle("Change User Credencial");
+        JFrame changeUserCredencialFrame = new JFrame("Change User Credencial");
         changeUserCredencialFrame.setContentPane(changeUserCredencialPanel);
         changeUserCredencialFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         changeUserCredencialFrame.pack();
@@ -48,15 +47,11 @@ public class ChangeUserCredencial extends JFrame {
                 validateFormFields(oldUser);
     
                 try {
-                    User newUser = new User(newUserName, newUserPassword);
-                    UserAction createNewUser = new UserAction();
-    
-                    validateFormFields(newUser);
+                    UserAction updateUserCredential = new UserAction();
                     
-                    createNewUser.createUser(newUser);
-                } catch (UserException | UserActionException error) {
+                    updateUserCredential.updateUser(newUserName, newUserPassword);
+                } catch (UserActionException error) {
                     JOptionPane.showMessageDialog(changeUserCredencialPanel, "Erro ao alterar usuário!");
-                    System.out.println("Error: " + error.getMessage());
                 } finally {
                     clearFormFields();
                 }
